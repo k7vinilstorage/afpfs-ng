@@ -8,7 +8,7 @@ afpfs-ng / libafpclient is an open source client for the Apple Filing Protocol.
 
 afpfs-ng is no longer packaged in Debian, but it remains useful - for example, [to mount Apple Time Capsule shares](https://rafaelc.org/posts/mounting-airport-time-capsule-on-linux-in-2025/).
 
-This repository provides a clean and reproducible way to build afpfs-ng inside a Docker container and generate a .deb package for easy installation.
+This repository provides a clean and reproducible way to build afpfs-ng inside a Docker container and generate a .deb (Debian/Ubuntu) or .rpm (Fedora/RHEL) package for easy installation.
 
 ## Requirements
 
@@ -17,19 +17,32 @@ This repository provides a clean and reproducible way to build afpfs-ng inside a
 
 ## Usage
 
-To build the package, run:
+To build the Debian package, run:
 
 ```bash
-make
+make deb
 ```
 
-The deb will be available in the `./dist` directory.
+To build the Fedora/RPM package, run:
 
+```bash
+make rpm
+```
+
+Running `make` with no target builds the .deb, for backwards compatibility. Both packages will be available in the `./dist` directory.
 
 ## Installing the package
 
+Debian/Ubuntu:
+
 ```bash
 sudo apt install ./dist/<name_of_file>.deb
+```
+
+Fedora/RHEL:
+
+```bash
+sudo dnf install ./dist/<name_of_file>.rpm
 ```
 
 ## Releases

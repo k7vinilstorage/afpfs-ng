@@ -1,0 +1,25 @@
+ARG FEDORA_VERSION=latest
+FROM fedora:${FEDORA_VERSION}
+
+# For cloning: git
+# For building: gcc make fuse-devel readline-devel libgcrypt-devel
+#   (libgcrypt is needed for the DHCAST128/DHX2 UAMs - without it the
+#   binary only supports cleartext/no-auth login, which most real AFP
+#   servers, including Time Capsule, refuse)
+# For packaging: rpm-build
+RUN dnf install -y \
+        git \
+        gcc \
+        make \
+        fuse-devel \
+        readline-devel \
+        libgcrypt-devel \
+        rpm-build \
+    && dnf clean all
+
+WORKDIR /app
+
+COPY entrypoint-rpm.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+CMD ["/app/entrypoint.sh"]
